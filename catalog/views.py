@@ -3,6 +3,8 @@ import datetime
 import stripe as stripe
 from django.shortcuts import render
 from django.views import generic
+from photologue.models import Gallery
+from photologue.views import GalleryListView, PhotoDetailView
 
 from .forms import OrderForm
 from .models import PhotographySession, Booking
@@ -12,12 +14,31 @@ from django.http import HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 
 
+class CustomGalleryListView(GalleryListView):
+    template_name = 'photologue/gallery_list.html'
+
+    def get_queryset(self):
+        return Gallery.objects.filter(title__icontains='')
+
+
+class CustomPhotoDetailView(PhotoDetailView):
+    template_name = 'photologue/photo_detail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
 def index(request):
     context = {
 
     }
 
     return render(request, 'index.html', context=context)
+
+
+def about(request):
+    return render(request, 'about.html')
 
 
 def senior_about(request):
@@ -93,4 +114,3 @@ def calendar_view(request):
     #     'current_month': currentDate.month,
     #     'current_year': currentDate.year
     # })
-

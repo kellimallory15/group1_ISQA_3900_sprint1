@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 import os
 from pathlib import Path
 
+from photologue import PHOTOLOGUE_APP_DIR
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -22,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-z+a4nc^3-i$$3(!x0^%!i^scy)vkvwfvhmvz^179$pfs299v6+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.pythonanywhere.com']
 
@@ -37,10 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
     # 'recurrence',
-
+    'booking',
+    'members',
+    'events',
+    'fontawesomefree',
+    'photologue',
+    'sortedm2m',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     # Local
     'payments.apps.PaymentsConfig',  # new
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -57,8 +68,7 @@ ROOT_URLCONF = 'locallibrary_pps.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), PHOTOLOGUE_APP_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,7 +127,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

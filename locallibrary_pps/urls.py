@@ -17,10 +17,34 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from django.template.defaulttags import url
+from django.urls import path, include, re_path
+from photologue import sitemaps
+from photologue.sitemaps import GallerySitemap, PhotoSitemap
+
+import booking
+
+sitemaps = {
+            'photologue_galleries': GallerySitemap,
+            'photologue_photos': PhotoSitemap,
+            }
 
 urlpatterns = [
                   path('admin/', admin.site.urls),
+                  path('booking/', include('booking.urls')),
+                  path('members/', include('members.urls')),
+                  path('members/', include('django.contrib.auth.urls')),
+                  path('user', include('members.urls')),
                   path('', include('catalog.urls')),
+                  path('', include('events.urls')),
+                  re_path(r'^photologue/', include('photologue.urls', namespace='photologue')),
+                  path(
+                      "sitemap.xml",
+                      sitemap,
+                      {"sitemaps": sitemaps},
+                      name="django.contrib.sitemaps.views.sitemap",
+                  )
+
               ] + static(settings.MEDIA_URL,
                          document_root=settings.MEDIA_ROOT)

@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django import forms
-from recurrence.fields import RecurrenceField
 
 
 class PhotographySession(models.Model):
@@ -64,10 +63,3 @@ class Photo(models.Model):
 
     def __str__(self):
         return self.photo_id
-
-
-class Course(models.Model):
-    title = models.CharField(max_length=200)
-    recurrences = RecurrenceField()
-
-

@@ -2,7 +2,6 @@
 const mainTabs = document.querySelector(".main-tabs");
 const mainSliderCircle = document.querySelector(".main-slider-circle");
 const roundButtons = document.querySelectorAll(".round-button");
-const hamburgerButtons = document.querySelectorAll(".hamburger");
 
 const colors = {
   blue: {
@@ -66,7 +65,7 @@ mainTabs.addEventListener("click", (event) => {
   const targetColor = event.target.dataset.color;
   const targetTranslateValue = event.target.dataset.translateValue;
 
-  if (event.target.classList.contains("round-button") || event.target.classList.contains("hamburger")) {
+  if (event.target.classList.contains("round-button")) {
     mainSliderCircle.classList.remove("animate-jello");
     void mainSliderCircle.offsetWidth;
     mainSliderCircle.classList.add("animate-jello");
@@ -77,7 +76,7 @@ mainTabs.addEventListener("click", (event) => {
 
     handleActiveTab(roundButtons, event, "active");
 
-    if (!event.target.classList.contains("gallery")) {
+    if (!event.target.classList.contains("photologue")) {
       root.style.setProperty("--filters-container-height", "0");
       root.style.setProperty("--filters-wrapper-opacity", "0");
     } else {

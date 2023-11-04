@@ -6,10 +6,12 @@ from django.views.static import serve
 from django.contrib import admin
 
 from . import views
+from .views import CustomGalleryListView, CustomPhotoDetailView
 
 urlpatterns = [path('admin/', admin.site.urls),
                path('', views.index, name='index'),
                path('senior_about/', views.senior_about, name='senior_about'),
+               path('about/', views.about, name='about'),
                path('family_about/', views.family_about, name='family_about'),
                path('calendar/', views.calendar, name="calendar"),
                path('couples_enagagements_about', views.couples_engagements_about, name='couples_engagements_about'),
@@ -17,21 +19,15 @@ urlpatterns = [path('admin/', admin.site.urls),
                path('cart/', views.view_cart, name='view_cart'),
                path('payment/', include('payments.urls')),
                path('create_booking/', views.create_booking, name='create_booking'),
+               path('booking/', include('booking.urls'), name='booking'),
+               path('bookings/', include('events.urls'), name='events'),
+               path('members/', include('members.urls'), name='members'),
+               path('portfolio/', CustomGalleryListView.as_view(), name='custom_gallery_list'),
+               path('portfolio/photologue/<slug>/', CustomPhotoDetailView.as_view(), name='photo-detail'),
                path('input_order_information/', views.create_booking, name="input_order_information"),  # new
                 re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}), # serve media files when deployed
                 re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}), # serve static files when deployed
                ]
-
-# If you already have a js_info_dict dictionary, just add
-# 'recurrence' to the existing 'packages' tuple.
-js_info_dict = {
-    'packages': ('recurrence', ),
-}
-
-# jsi18n can be anything you like here
-#urlpatterns += [
-#    url(r'^jsi18n/$', JavaScriptCatalog.as_view(), js_info_dict),
-#]
 
 # Pages we need
 # Index.html homepage with about us, our mission, and view package types (kelli)
