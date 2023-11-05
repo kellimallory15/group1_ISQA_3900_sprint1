@@ -31,6 +31,9 @@ sitemaps = {
             'photologue_photos': PhotoSitemap,
             }
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
 urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('booking/', include('booking.urls')),
@@ -46,8 +49,8 @@ urlpatterns = [
                       {"sitemaps": sitemaps},
                       name="django.contrib.sitemaps.views.sitemap",
                   ),
-                  re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}), # serve media files when deployed
-                  re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}), # serve static files when deployed
+                  # re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+                  re_path(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
 
               ] + static(settings.MEDIA_URL,
                          document_root=settings.MEDIA_ROOT)
