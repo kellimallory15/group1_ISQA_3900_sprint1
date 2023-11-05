@@ -21,6 +21,7 @@ from django.contrib.sitemaps.views import sitemap
 from django.template.defaulttags import url
 from django.urls import path, include, re_path
 from photologue import sitemaps
+from django.views.static import serve
 from photologue.sitemaps import GallerySitemap, PhotoSitemap
 
 import booking
